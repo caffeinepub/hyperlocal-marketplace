@@ -302,6 +302,8 @@ export function useApproveShop() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['shops'] });
       queryClient.invalidateQueries({ queryKey: ['platformStats'] });
+      // Invalidate all user profiles to trigger refetch for affected shopkeepers
+      queryClient.invalidateQueries({ queryKey: ['currentUserProfile'] });
     },
   });
 }
@@ -364,4 +366,38 @@ export function useSaveUserProfile() {
       queryClient.invalidateQueries({ queryKey: ['currentUserProfile'] });
     },
   });
+}
+
+// User profile query with polling for pending shop approval
+export function useGetCallerUserProfile() {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  const query = useQuery<UserProfile | null>({
+    queryKey: ['currentUserProfile'],
+    queryFn: async () => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.getCallerUserProfile();
+    },
+    enabled: !!actor && !actorFetching,
+    retry: false,
+    // Poll every 5 seconds if user is a shopkeeper with a pending shop
+    refetchInterval: (query) => {
+      const data = query.state.data;
+      if (!data) return false;
+      const roleKey = Object.keys(AppRole).find(
+        (key) => AppRole[key as keyof typeof AppRole] === data.appRole
+      );
+      // Poll if shopkeeper role and has a shopId (shop registered but might be pending)
+      if (roleKey === 'shopkeeper' && data.shopId) {
+        return 5000; // 5 seconds
+      }
+      return false;
+    },
+  });
+
+  return {
+    ...query,
+    isLoading: actorFetching || query.isLoading,
+    isFetched: !!actor && query.isFetched,
+  };
 }

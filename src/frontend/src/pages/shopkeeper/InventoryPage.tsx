@@ -3,7 +3,7 @@ import RoleGuard from '../../components/auth/RoleGuard';
 import { useAuth } from '../../hooks/useAuth';
 import { useGetProducts, useGetShops } from '../../hooks/useQueries';
 import { Button } from '../../components/ui/button';
-import { Package, Plus } from 'lucide-react';
+import { Package, Plus, AlertCircle } from 'lucide-react';
 import InventoryProductCard from '../../components/shopkeeper/InventoryProductCard';
 import ProductFormModal from '../../components/shopkeeper/ProductFormModal';
 
@@ -24,7 +24,7 @@ export default function InventoryPage() {
             <Package className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">No shop registered</h3>
             <p className="text-muted-foreground">
-              Please register your shop first
+              Please register your shop first from the Shop Dashboard
             </p>
           </div>
         </div>
@@ -37,11 +37,13 @@ export default function InventoryPage() {
       <RoleGuard allowedRoles={['shopkeeper']}>
         <div className="container mx-auto px-4 py-8">
           <div className="text-center py-12">
-            <Package className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Shop pending approval</h3>
-            <p className="text-muted-foreground">
-              Wait for admin approval before adding products
-            </p>
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 max-w-md mx-auto">
+              <AlertCircle className="h-16 w-16 text-yellow-600 dark:text-yellow-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Shop Pending Approval</h3>
+              <p className="text-muted-foreground">
+                Your shop is waiting for admin approval. Once approved, you'll be able to add and manage products. This page will update automatically.
+              </p>
+            </div>
           </div>
         </div>
       </RoleGuard>

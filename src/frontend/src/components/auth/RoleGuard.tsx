@@ -61,7 +61,7 @@ export default function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
-          <AlertCircle className="h-16 w-16 text-destructive mx-auto mb-4" />
+          <AlertCircle className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-2">Access Denied</h2>
           <p className="text-muted-foreground mb-6">
             You don't have permission to access this page

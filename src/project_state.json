@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 5,
   "summary": "Hyperlocal marketplace with Customer, Shopkeeper, and Admin portals. Customers browse shops by location filter, view products by category (Grocery, Electronics, Fashion), add to cart, and checkout. Shopkeepers manage inventory with online/offline toggle, upload product photos, and view orders. Admin dashboard for shop approval, transaction monitoring (2% commission tracking), and user management. Mobile-first responsive design with Internet Identity authentication. Uses Motoko backend (not Firebase). No real-time geolocation, push notifications, AI image analysis, or live tracking.",
   "architectural_notes": [
     "Three-tier role system: Customer, Shopkeeper, Admin with Internet Identity authentication",
@@ -17,10 +17,10 @@
     "No push notifications - users check order status manually",
     "No AI image analysis for product suggestions from photos",
     "No real-time inventory sync - updates occur on user actions",
-    "No live delivery tracking on map"
+    "No live delivery tracking on map",
+    "Shopkeeper login flow is complex and unresponsive after admin approval"
   ],
-  "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Hero banner image showing local marketplace scene with shops and customers (hero-banner.dim_1200x400.png)\n- Placeholder product image for inventory items without photos (product-placeholder.dim_300x300.png)\n- Customer portal icon representing shopping (customer-icon.dim_64x64.png)\n- Shopkeeper portal icon representing store management (shopkeeper-icon.dim_64x64.png)\n- Admin portal icon representing dashboard control (admin-icon.dim_64x64.png)",
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-implement-user-authentication-with-three-role-types-customer-shopkeeper-and-admin-using-internet-identity",
@@ -157,6 +157,30 @@
         "REQ-17"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-modify-the-shopkeeper-authentication-flow-to-automatically-enable-shop-functionality-immediately-after-admin-approval-without-requiring-additional-login-steps-or-permission-checks",
+      "title": "Modify the shopkeeper authentication flow to automatically enable shop functionality immediately after admin approval without requiring additional login steps or permission checks",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-automatic-query-invalidation-and-refetch-when-shop-approval-status-changes-so-shopkeepers-see-updated-permissions-without-manual-refresh",
+      "title": "Add automatic query invalidation and refetch when shop approval status changes so shopkeepers see updated permissions without manual refresh",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-any-unnecessary-authentication-barriers-or-complex-permission-checks-that-prevent-shopkeepers-from-accessing-their-dashboard-after-initial-internet-identity-login-and-admin-approval",
+      "title": "Remove any unnecessary authentication barriers or complex permission checks that prevent shopkeepers from accessing their dashboard after initial Internet Identity login and admin approval",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -235,6 +259,18 @@
     {
       "id": "AR-13",
       "summary": "Global settings: adjust delivery radius and manage platform settings",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Payment integration: PhonePe, Paytm, Cash on Delivery",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Admin setting to configure Cash on Delivery service fees",
       "reqIds": [],
       "status": "pending"
     }

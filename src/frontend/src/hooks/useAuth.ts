@@ -1,7 +1,6 @@
 import { useInternetIdentity } from './useInternetIdentity';
 import { useActor } from './useActor';
-import { useQuery } from '@tanstack/react-query';
-import type { UserProfile } from '../backend';
+import { useGetCallerUserProfile } from './useQueries';
 
 export function useAuth() {
   const { identity, loginStatus } = useInternetIdentity();
@@ -9,15 +8,7 @@ export function useAuth() {
 
   const isAuthenticated = !!identity && !identity.getPrincipal().isAnonymous();
 
-  const profileQuery = useQuery<UserProfile | null>({
-    queryKey: ['currentUserProfile'],
-    queryFn: async () => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.getCallerUserProfile();
-    },
-    enabled: !!actor && !actorFetching && isAuthenticated,
-    retry: false,
-  });
+  const profileQuery = useGetCallerUserProfile();
 
   return {
     identity,

@@ -1,19 +1,19 @@
 import List "mo:core/List";
 import Map "mo:core/Map";
 import Array "mo:core/Array";
-import Order "mo:core/Order";
-import Blob "mo:core/Blob";
-import Iter "mo:core/Iter";
 import Text "mo:core/Text";
-import Timer "mo:core/Timer";
-import Float "mo:core/Float";
-import Nat32 "mo:core/Nat32";
-import Principal "mo:core/Principal";
-import Int32 "mo:core/Int32";
-import Runtime "mo:core/Runtime";
 import Time "mo:core/Time";
-import Char "mo:core/Char";
+import Timer "mo:core/Timer";
 import Nat "mo:core/Nat";
+import Float "mo:core/Float";
+import Principal "mo:core/Principal";
+import Iter "mo:core/Iter";
+import Runtime "mo:core/Runtime";
+import Char "mo:core/Char";
+import Nat32 "mo:core/Nat32";
+import Int32 "mo:core/Int32";
+import Blob "mo:core/Blob";
+import Order "mo:core/Order";
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
 import MixinStorage "blob-storage/Mixin";
@@ -224,7 +224,16 @@ actor {
 
   func ownsShop(caller : Principal, shopId : ShopId) : Bool {
     switch (shops.get(shopId)) {
-      case (?shop) { shop.owner == caller };
+      case (?shop) {
+        shop.owner == caller
+      };
+      case (null) { false };
+    };
+  };
+
+  func shopIsApproved(shopId : ShopId) : Bool {
+    switch (shops.get(shopId)) {
+      case (?shop) { shop.approved };
       case (null) { false };
     };
   };
@@ -524,6 +533,15 @@ actor {
       Runtime.trap("Unauthorized: You can only update your own products");
     };
 
+    let existingProduct = switch (products.get(productId)) {
+      case (null) { Runtime.trap("Product not found") };
+      case (?p) { p };
+    };
+
+    if (not shopIsApproved(existingProduct.shopId)) {
+      Runtime.trap("Shop must be approved to update products");
+    };
+
     let updatedProduct : Product = {
       id = productId;
       name = product.name;
@@ -548,6 +566,15 @@ actor {
     };
     if (not ownsProduct(caller, productId)) {
       Runtime.trap("Unauthorized: You can only delete your own products");
+    };
+
+    let existingProduct = switch (products.get(productId)) {
+      case (null) { Runtime.trap("Product not found") };
+      case (?p) { p };
+    };
+
+    if (not shopIsApproved(existingProduct.shopId)) {
+      Runtime.trap("Shop must be approved to delete products");
     };
 
     products.remove(productId);
@@ -602,6 +629,10 @@ actor {
     let shop = switch (shops.get(shopId)) {
       case (null) { Runtime.trap("Shop not found") };
       case (?s) { s };
+    };
+
+    if (not shop.approved) {
+      Runtime.trap("Shop must be approved before changing status");
     };
 
     let updatedShop = {
@@ -663,6 +694,10 @@ actor {
     let order = switch (orders.get(orderId)) {
       case (null) { Runtime.trap("Order not found") };
       case (?o) { o };
+    };
+
+    if (not shopIsApproved(order.shopId)) {
+      Runtime.trap("Shop must be approved to update orders");
     };
 
     let updatedOrder = {

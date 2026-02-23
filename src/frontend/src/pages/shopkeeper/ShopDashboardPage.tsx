@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import RoleGuard from '../../components/auth/RoleGuard';
 import { useAuth } from '../../hooks/useAuth';
 import { useGetShops, useRegisterShop, useToggleShopStatus } from '../../hooks/useQueries';
@@ -7,7 +7,7 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Switch } from '../../components/ui/switch';
-import { Store, MapPin, AlertCircle } from 'lucide-react';
+import { Store, MapPin, AlertCircle, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function ShopDashboardPage() {
@@ -18,8 +18,19 @@ export default function ShopDashboardPage() {
 
   const [shopName, setShopName] = useState('');
   const [location, setLocation] = useState('');
+  const [previousApprovalStatus, setPreviousApprovalStatus] = useState<boolean | null>(null);
 
   const myShop = shops.find((s) => s.id === userProfile?.shopId);
+
+  // Detect when shop approval status changes and show success message
+  useEffect(() => {
+    if (myShop) {
+      if (previousApprovalStatus === false && myShop.approved === true) {
+        toast.success('🎉 Your shop has been approved! You can now add products and manage your inventory.');
+      }
+      setPreviousApprovalStatus(myShop.approved);
+    }
+  }, [myShop?.approved]);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,7 +99,7 @@ export default function ShopDashboardPage() {
           </Card>
         ) : (
           <div className="space-y-6">
-            {!myShop.approved && (
+            {!myShop.approved ? (
               <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-500 flex-shrink-0 mt-0.5" />
                 <div>
@@ -96,7 +107,19 @@ export default function ShopDashboardPage() {
                     Pending Approval
                   </h3>
                   <p className="text-sm text-yellow-800 dark:text-yellow-200 mt-1">
-                    Your shop is waiting for admin approval. You'll be able to add products once approved.
+                    Your shop is waiting for admin approval. You'll be able to add products and manage inventory once approved. This page will update automatically.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-success-green/10 border border-success-green/30 rounded-lg p-4 flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-success-green flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-medium text-success-green">
+                    Shop Approved
+                  </h3>
+                  <p className="text-sm text-success-green/90 mt-1">
+                    Your shop is approved and ready for business! You can now add products, manage inventory, and accept orders.
                   </p>
                 </div>
               </div>

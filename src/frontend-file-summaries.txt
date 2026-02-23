@@ -10,5 +10,12 @@
   "frontend/src/pages/admin/TicketsPage.tsx": "Admin support ticket management page with tabs for open, in-progress, and resolved tickets with status update controls.",
   "frontend/src/pages/admin/SettingsPage.tsx": "Admin settings page placeholder for future platform-wide configuration options.",
   "frontend/src/index.css": "Global styles with OKLCH color system including custom Trust-Blue and Success-Green color tokens for light and dark modes.",
-  "frontend/tailwind.config.js": "Tailwind configuration extended with custom Trust-Blue and Success-Green color utilities matching the marketplace theme."
+  "frontend/tailwind.config.js": "Tailwind configuration extended with custom Trust-Blue and Success-Green color utilities matching the marketplace theme.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including products, shops, orders, and user profiles with automatic polling for shopkeeper approval status using query.state.data and proper cache invalidation.",
+  "frontend/src/hooks/useAuth.ts": "Authentication hook that combines Internet Identity state with user profile data using the enhanced useGetCallerUserProfile hook with polling support.",
+  "frontend/src/pages/shopkeeper/ShopDashboardPage.tsx": "Shop dashboard page with shop registration, status display, and automatic detection of approval status changes with success notifications.",
+  "frontend/src/pages/shopkeeper/InventoryPage.tsx": "Inventory management page that checks shop approval status and displays appropriate messages while automatically updating when approval is granted.",
+  "frontend/src/pages/shopkeeper/OrdersPage.tsx": "Shop orders management page that verifies shop approval status before displaying orders and updates automatically when shop is approved.",
+  "frontend/src/pages/shopkeeper/LedgerPage.tsx": "Digital ledger page showing sales and commission breakdown that checks shop approval status and updates automatically when approved.",
+  "frontend/src/components/auth/RoleGuard.tsx": "Role-based access control component that verifies user authentication and role permissions before rendering protected content."
 }

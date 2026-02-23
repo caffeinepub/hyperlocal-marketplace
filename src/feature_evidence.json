@@ -2,157 +2,12 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-implement-user-authentication-with-three-role-types-customer-shopkeeper-and-admin-using-internet-identity",
-      "featureTitle": "Implement user authentication with three role types: Customer, Shopkeeper, and Admin using Internet Identity",
+      "featureId": "feature-modify-the-shopkeeper-authentication-flow-to-automatically-enable-shop-functionality-immediately-after-admin-approval-without-requiring-additional-login-steps-or-permission-checks",
+      "featureTitle": "Modify the shopkeeper authentication flow to automatically enable shop functionality immediately after admin approval without requiring additional login steps or permission checks",
       "files": [
-        "frontend/src/components/auth/LoginButton.tsx",
-        "frontend/src/components/auth/ProfileSetupModal.tsx",
-        "frontend/src/components/auth/RoleGuard.tsx",
-        "frontend/src/hooks/useAuth.ts"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-1"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-customer-portal-with-shop-browsing-filtered-by-manually-set-city-area-location",
-      "featureTitle": "Create Customer portal with shop browsing filtered by manually set city/area location",
-      "files": [
-        "frontend/src/components/customer/ShopCard.tsx",
-        "frontend/src/pages/customer/ShopBrowsePage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-category-based-product-search-with-predefined-categories-grocery-electronics-fashion-home-garden-health-beauty-sports-outdoors",
-      "featureTitle": "Implement category-based product search with predefined categories: Grocery, Electronics, Fashion, Home & Garden, Health & Beauty, Sports & Outdoors",
-      "files": [
-        "frontend/src/components/customer/ProductCard.tsx",
-        "frontend/src/pages/customer/ProductBrowsePage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-build-shopping-cart-with-quick-add-functionality-and-quantity-adjustment",
-      "featureTitle": "Build shopping cart with Quick-Add functionality and quantity adjustment",
-      "files": [
-        "frontend/src/components/customer/CartItem.tsx",
-        "frontend/src/components/customer/CartSidebar.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-secure-checkout-process-that-calculates-order-total-applies-2-platform-commission-and-records-transaction",
-      "featureTitle": "Create secure checkout process that calculates order total, applies 2% platform commission, and records transaction",
-      "files": [
-        "frontend/src/pages/customer/CheckoutPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-5"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-my-orders-section-for-customers-showing-order-history-with-status-tracking",
-      "featureTitle": "Implement My Orders section for customers showing order history with status tracking",
-      "files": [
-        "frontend/src/components/customer/OrderCard.tsx",
-        "frontend/src/pages/customer/MyOrdersPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-6"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-return-exchange-request-functionality-allowing-customers-to-submit-requests-for-completed-orders",
-      "featureTitle": "Add Return/Exchange request functionality allowing customers to submit requests for completed orders",
-      "files": [
-        "frontend/src/components/customer/ReturnRequestModal.tsx",
-        "frontend/src/pages/customer/ReturnRequestsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-7"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-shopkeeper-portal-with-online-offline-status-toggle-visible-to-customers",
-      "featureTitle": "Create Shopkeeper portal with online/offline status toggle visible to customers",
-      "files": [
+        "frontend/src/pages/shopkeeper/InventoryPage.tsx",
+        "frontend/src/pages/shopkeeper/LedgerPage.tsx",
+        "frontend/src/pages/shopkeeper/OrdersPage.tsx",
         "frontend/src/pages/shopkeeper/ShopDashboardPage.tsx"
       ],
       "components": [
@@ -165,16 +20,37 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-8"
+        "REQ-18"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-build-inventory-management-system-for-shopkeepers-to-add-edit-and-delete-products-with-photo-upload",
-      "featureTitle": "Build inventory management system for shopkeepers to add, edit, and delete products with photo upload",
+      "featureId": "feature-add-automatic-query-invalidation-and-refetch-when-shop-approval-status-changes-so-shopkeepers-see-updated-permissions-without-manual-refresh",
+      "featureTitle": "Add automatic query invalidation and refetch when shop approval status changes so shopkeepers see updated permissions without manual refresh",
       "files": [
-        "frontend/src/components/shopkeeper/InventoryProductCard.tsx",
-        "frontend/src/components/shopkeeper/ProductFormModal.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/shopkeeper/ShopDashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-remove-any-unnecessary-authentication-barriers-or-complex-permission-checks-that-prevent-shopkeepers-from-accessing-their-dashboard-after-initial-internet-identity-login-and-admin-approval",
+      "featureTitle": "Remove any unnecessary authentication barriers or complex permission checks that prevent shopkeepers from accessing their dashboard after initial Internet Identity login and admin approval",
+      "files": [
+        "frontend/src/components/auth/RoleGuard.tsx",
+        "frontend/src/hooks/useAuth.ts",
         "frontend/src/pages/shopkeeper/InventoryPage.tsx"
       ],
       "components": [
@@ -187,173 +63,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-9"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-order-management-dashboard-for-shopkeepers-to-view-incoming-orders-and-update-order-status",
-      "featureTitle": "Implement order management dashboard for shopkeepers to view incoming orders and update order status",
-      "files": [
-        "frontend/src/components/shopkeeper/ShopOrderCard.tsx",
-        "frontend/src/pages/shopkeeper/OrdersPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-10"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-digital-ledger-for-shopkeepers-showing-sales-history-with-2-platform-commission-breakdown-per-transaction",
-      "featureTitle": "Create digital ledger for shopkeepers showing sales history with 2% platform commission breakdown per transaction",
-      "files": [
-        "frontend/src/pages/shopkeeper/LedgerPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-11"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-build-admin-dashboard-with-secure-login-and-overview-showing-platform-wide-statistics",
-      "featureTitle": "Build Admin dashboard with secure login and overview showing platform-wide statistics",
-      "files": [
-        "frontend/src/pages/admin/AdminDashboardPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-12"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-shop-management-system-for-admin-to-approve-verify-new-shop-registrations-and-view-shop-performance-metrics",
-      "featureTitle": "Implement shop management system for admin to approve/verify new shop registrations and view shop performance metrics",
-      "files": [
-        "frontend/src/pages/admin/ShopManagementPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-13"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-transaction-analytics-dashboard-for-admin-showing-total-sales-pending-2-commissions-and-subscription-tracking",
-      "featureTitle": "Create transaction analytics dashboard for admin showing total sales, pending 2% commissions, and subscription tracking",
-      "files": [
-        "frontend/src/pages/admin/AnalyticsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-14"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-build-user-support-ticket-system-for-admin-to-manage-disputes-between-customers-and-shopkeepers",
-      "featureTitle": "Build user support ticket system for admin to manage disputes between customers and shopkeepers",
-      "files": [
-        "frontend/src/components/shared/CreateTicketModal.tsx",
-        "frontend/src/pages/admin/TicketsPage.tsx",
-        "frontend/src/pages/customer/MyTicketsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-15"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-global-settings-panel-for-admin-to-adjust-platform-wide-delivery-radius-filter-and-manage-platform-configuration",
-      "featureTitle": "Implement global settings panel for admin to adjust platform-wide delivery radius filter and manage platform configuration",
-      "files": [
-        "frontend/src/pages/admin/SettingsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-16"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-design-mobile-first-responsive-ui-with-trust-blue-and-success-green-color-palette-across-all-portals",
-      "featureTitle": "Design mobile-first responsive UI with Trust-Blue and Success-Green color palette across all portals",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/layout/AppLayout.tsx",
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-17"
+        "REQ-20"
       ],
       "confidence": "high"
     }

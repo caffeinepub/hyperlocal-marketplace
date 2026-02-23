@@ -1,489 +1,94 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Local Market Hub - Frontend Implementation Plan",
+  "title": "Simplify shopkeeper login flow after admin approval",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Implement user authentication with three role types using Internet Identity and authorization component",
+      "id": "REQ-18",
+      "summary": "Automatically enable shop functionality immediately after admin approval without requiring additional login steps or permission checks",
       "acceptanceCriteria": [
-        "Users can register and login using Internet Identity",
-        "System assigns one of three roles: Customer, Shopkeeper, or Admin",
-        "Role is persisted and enforced across all portal access"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/auth/LoginButton.tsx",
-          "operation": "create",
-          "description": "Create login button component using authorization component's Internet Identity integration with login/logout functionality, handling authentication state and clearing cached data on logout"
-        },
-        {
-          "path": "frontend/src/components/auth/ProfileSetupModal.tsx",
-          "operation": "create",
-          "description": "Create modal component for first-time user profile setup that captures name and role selection (Customer, Shopkeeper, Admin), integrating with authorization component's user profile system via getCallerUserProfile and saveCallerUserProfile"
-        },
-        {
-          "path": "frontend/src/hooks/useAuth.ts",
-          "operation": "create",
-          "description": "Create authentication hook that wraps authorization component's useInternetIdentity to provide isAuthenticated, identity, and user profile state, preventing profile setup modal flash by properly handling actor dependency. Verify the authorization component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/auth/RoleGuard.tsx",
-          "operation": "create",
-          "description": "Create role-based access control guard component that checks user's appRole from UserProfile and conditionally renders content or access denied screen based on required role (customer, shopkeeper, admin)"
-        }
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "summary": "Create Customer portal with shop browsing filtered by manually set city/area location",
-      "acceptanceCriteria": [
-        "Customers can filter shops by city or area designation",
-        "Shop listings display name, category, and online/offline status",
-        "Only shops marked as 'Online' appear in active listings"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/customer/ShopBrowsePage.tsx",
-          "operation": "create",
-          "description": "Create customer shop browsing page with location filter input (city/area text field), calling getShopsByLocation backend method to fetch filtered shops, displaying shop cards showing name, location, online/offline status badge, with visual distinction for online vs offline shops"
-        },
-        {
-          "path": "frontend/src/components/customer/ShopCard.tsx",
-          "operation": "create",
-          "description": "Create shop card component displaying shop name, location, and online/offline status with Trust-Blue styling for online shops and muted styling for offline shops, with click handler to navigate to shop detail page"
-        },
-        {
-          "path": "frontend/src/hooks/useShops.ts",
-          "operation": "create",
-          "description": "Create React Query hook for fetching shops using getShops and getShopsByLocation backend methods, with filtering logic to show only approved and online shops to customers"
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Implement category-based product search with predefined categories",
-      "acceptanceCriteria": [
-        "Products are tagged with one primary category",
-        "Customers can filter products by category across all shops or within a single shop",
-        "Category filter updates product listings dynamically"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/customer/ProductBrowsePage.tsx",
-          "operation": "create",
-          "description": "Create product browsing page with category filter dropdown (Grocery, Electronics, Fashion, Home & Garden, Health & Beauty, Sports & Outdoors) calling getProducts or getProductsByCategory backend methods, with optional shop filter to view products from single shop"
-        },
-        {
-          "path": "frontend/src/components/customer/ProductCard.tsx",
-          "operation": "create",
-          "description": "Create product card component displaying product image (using ExternalBlob's getDirectURL method for browser-cached streaming), name, price, category badge, stock status, and Quick-Add button. Verify the blob-storage component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/customer/CategoryFilter.tsx",
-          "operation": "create",
-          "description": "Create category filter component with dropdown or button group for all six predefined categories, triggering product list refresh when category selection changes"
-        },
-        {
-          "path": "frontend/src/hooks/useProducts.ts",
-          "operation": "create",
-          "description": "Create React Query hook for fetching products using getProducts, getProductsByCategory, and getProductsByLocation backend methods with query key management for filter-based refetching"
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Build shopping cart with Quick-Add functionality and quantity adjustment",
-      "acceptanceCriteria": [
-        "Customers can add products to cart with a single click",
-        "Cart displays all items with product name, price, quantity, and subtotal",
-        "Customers can adjust quantities or remove items before checkout"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/customer/CartSidebar.tsx",
-          "operation": "create",
-          "description": "Create cart sidebar component displaying cart items from getCart backend method, showing product name, price, quantity stepper, subtotal per item, and cart total with Success-Green styling for add-to-cart confirmations"
-        },
-        {
-          "path": "frontend/src/components/customer/CartItem.tsx",
-          "operation": "create",
-          "description": "Create cart item component with quantity adjustment controls calling updateCartItem backend method, remove button, and displaying product thumbnail using ExternalBlob's getDirectURL. Verify the blob-storage component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/hooks/useCart.ts",
-          "operation": "create",
-          "description": "Create React Query hook managing cart state with mutations for addToCart, updateCartItem, and checkout backend methods, including optimistic updates and cart invalidation after successful checkout"
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Create secure checkout process that calculates order total, applies 2% platform commission, and records transaction",
-      "acceptanceCriteria": [
-        "Checkout displays itemized order summary with total amount",
-        "System calculates and records 2% commission on each sale",
-        "Order is created with status 'Pending' after checkout completion",
-        "Cart is cleared after successful order placement"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/customer/CheckoutPage.tsx",
-          "operation": "create",
-          "description": "Create checkout page displaying itemized cart summary, order total calculation, calling checkout backend method which handles commission calculation and order creation, then redirecting to order confirmation with Success-Green success indicators"
-        },
-        {
-          "path": "frontend/src/components/customer/OrderSummary.tsx",
-          "operation": "create",
-          "description": "Create order summary component displaying line items with product name, quantity, price, subtotals, and grand total, with clear typography hierarchy and Trust-Blue primary action button for checkout confirmation"
-        }
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "summary": "Implement My Orders section for customers showing order history with status tracking",
-      "acceptanceCriteria": [
-        "Customers can view all their past and current orders",
-        "Each order displays: order ID, date, shop name, items, total amount, and current status",
-        "Order statuses include: Pending, Confirmed, Preparing, Ready for Pickup, Completed, Cancelled",
-        "Customers can manually refresh to see updated order status"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/customer/MyOrdersPage.tsx",
-          "operation": "create",
-          "description": "Create customer orders page fetching orders via getMyOrders backend method, displaying order cards with order ID, timestamp, shop name, status badge, total amount, and manual refresh button with Trust-Blue styling"
-        },
-        {
-          "path": "frontend/src/components/customer/OrderCard.tsx",
-          "operation": "create",
-          "description": "Create order card component showing order details, status badge with color coding (Success-Green for completed, Trust-Blue for in-progress, yellow for pending, red for cancelled), and expandable item list"
-        },
-        {
-          "path": "frontend/src/hooks/useOrders.ts",
-          "operation": "create",
-          "description": "Create React Query hook for fetching customer orders using getMyOrders backend method with manual refetch capability and query invalidation on status changes"
-        }
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "summary": "Add Return/Exchange request functionality allowing customers to submit requests for completed orders",
-      "acceptanceCriteria": [
-        "Customers can initiate return or exchange request on completed orders",
-        "Request form captures: order ID, reason (dropdown: Damaged, Wrong Item, Quality Issue, Changed Mind), and optional description",
-        "Request is submitted to admin for review",
-        "Customer can view status of their return/exchange requests"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/customer/ReturnRequestModal.tsx",
-          "operation": "create",
-          "description": "Create return request modal component with order ID display, reason dropdown (Damaged, Wrong Item, Quality Issue, Changed Mind), optional description textarea, calling requestReturn backend method, with Success-Green confirmation on submission"
-        },
-        {
-          "path": "frontend/src/pages/customer/ReturnRequestsPage.tsx",
-          "operation": "create",
-          "description": "Create return requests tracking page displaying customer's submitted return/exchange requests with status, reason, and linked order ID"
-        }
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "summary": "Create Shopkeeper portal with online/offline status toggle visible to customers",
-      "acceptanceCriteria": [
-        "Shopkeepers can toggle their shop status between Online and Offline",
-        "Status change is reflected immediately in customer-facing shop listings",
-        "Offline shops do not appear in active customer browsing"
+        "When admin approves a shop registration, the shopkeeper can immediately access their dashboard without re-authenticating",
+        "Shopkeeper users see their shop status update in real-time or after a single page refresh",
+        "No additional permission prompts or loading states block shopkeeper access after approval",
+        "The shop dashboard page (ShopDashboardPage) detects approval status and displays shop management controls without requiring logout/login"
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/shopkeeper/ShopDashboardPage.tsx",
-          "operation": "create",
-          "description": "Create shopkeeper dashboard page with online/offline toggle switch calling toggleShopStatus backend method, displaying current shop status with Success-Green for online and gray for offline, with immediate UI feedback and query invalidation"
+          "operation": "modify",
+          "description": "Remove any barriers that require shopkeepers to log out and back in after admin approval. Ensure the page automatically detects when a shop transitions from pending to approved status and immediately displays shop management controls (toggle online/offline). Add polling or real-time check to detect approval status changes without requiring manual refresh."
         },
-        {
-          "path": "frontend/src/components/shopkeeper/ShopStatusToggle.tsx",
-          "operation": "create",
-          "description": "Create shop status toggle component with visual switch control, calling toggleShopStatus backend method with optimistic update and rollback on error, using Trust-Blue and Success-Green color states"
-        }
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "summary": "Build inventory management system for shopkeepers to add, edit, and delete products with photo upload",
-      "acceptanceCriteria": [
-        "Shopkeepers can add new products with: name, description, price, category, stock quantity, and product image",
-        "Image upload stores photo as static asset accessible via frontend",
-        "Shopkeepers can edit existing product details including replacing product image",
-        "Shopkeepers can delete products from their inventory",
-        "Products marked as out-of-stock are visually indicated but remain visible"
-      ],
-      "file_operations": [
         {
           "path": "frontend/src/pages/shopkeeper/InventoryPage.tsx",
-          "operation": "create",
-          "description": "Create inventory management page displaying shopkeeper's products from getProducts backend method filtered by their shopId, with add/edit/delete actions and out-of-stock visual indicators using muted styling"
+          "operation": "modify",
+          "description": "Remove authentication barriers that block approved shopkeepers from accessing inventory management. Ensure the page checks current shop approval status from the user profile and immediately grants access to product management when the shop is approved, without requiring re-login."
         },
-        {
-          "path": "frontend/src/components/shopkeeper/ProductFormModal.tsx",
-          "operation": "create",
-          "description": "Create product form modal for add/edit operations with fields for name, description, price, category dropdown, stock quantity, and image upload using ExternalBlob.fromBytes for image handling with upload progress tracking, calling addProduct or updateProduct backend methods. Verify the blob-storage component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/shopkeeper/InventoryProductCard.tsx",
-          "operation": "create",
-          "description": "Create inventory product card component showing product details, stock status badge, edit and delete buttons, product image thumbnail using ExternalBlob's getDirectURL, with Trust-Blue action buttons. Verify the blob-storage component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/hooks/useInventory.ts",
-          "operation": "create",
-          "description": "Create React Query hook for inventory operations with mutations for addProduct, updateProduct, and deleteProduct backend methods, including query invalidation and optimistic updates"
-        }
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "summary": "Implement order management dashboard for shopkeepers to view incoming orders and update order status",
-      "acceptanceCriteria": [
-        "Shopkeepers see all orders placed at their shop sorted by date (newest first)",
-        "Each order displays: order ID, customer name, items ordered, total amount, and current status",
-        "Shopkeepers can update order status through workflow: Pending → Confirmed → Preparing → Ready for Pickup → Completed",
-        "Shopkeepers can cancel orders with reason"
-      ],
-      "file_operations": [
         {
           "path": "frontend/src/pages/shopkeeper/OrdersPage.tsx",
-          "operation": "create",
-          "description": "Create shopkeeper orders page fetching orders via getShopOrders backend method filtered by shopkeeper's shopId, sorted by timestamp descending, displaying order cards with status update controls"
+          "operation": "modify",
+          "description": "Ensure approved shopkeepers can immediately access their orders page without additional permission checks or login prompts. Verify the page uses current shop status from user profile query."
         },
-        {
-          "path": "frontend/src/components/shopkeeper/ShopOrderCard.tsx",
-          "operation": "create",
-          "description": "Create shop order card component showing order details, customer name from UserProfile lookup, status workflow buttons (Confirm, Prepare, Ready, Complete) calling updateOrderStatus backend method, with Success-Green progress indicators"
-        },
-        {
-          "path": "frontend/src/components/shopkeeper/OrderStatusControls.tsx",
-          "operation": "create",
-          "description": "Create order status control component with workflow-based action buttons that enable next valid status transition based on current status, with cancel order option displaying reason input modal"
-        },
-        {
-          "path": "frontend/src/hooks/useShopOrders.ts",
-          "operation": "create",
-          "description": "Create React Query hook for shopkeeper orders using getShopOrders backend method with mutation for updateOrderStatus and query invalidation on status changes"
-        }
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "summary": "Create digital ledger for shopkeepers showing sales history with 2% platform commission breakdown per transaction",
-      "acceptanceCriteria": [
-        "Ledger displays all completed orders with: date, order ID, gross sale amount, 2% commission deducted, and net earning",
-        "Running totals show: total sales, total commission paid, and net earnings for current month and all-time",
-        "Ledger is filterable by date range"
-      ],
-      "file_operations": [
         {
           "path": "frontend/src/pages/shopkeeper/LedgerPage.tsx",
-          "operation": "create",
-          "description": "Create digital ledger page displaying completed orders from getShopOrders backend method filtered by 'delivered' status, showing per-transaction breakdown with gross sale, 2% commission calculation, and net earning, plus running totals section with Trust-Blue summary cards"
-        },
-        {
-          "path": "frontend/src/components/shopkeeper/LedgerTable.tsx",
-          "operation": "create",
-          "description": "Create ledger table component with columns for date, order ID, gross amount, commission (2%), and net earning, with date range filter controls and sortable columns"
-        },
-        {
-          "path": "frontend/src/components/shopkeeper/LedgerSummary.tsx",
-          "operation": "create",
-          "description": "Create ledger summary component displaying aggregated statistics cards for total sales, total commission paid, net earnings for current month and all-time, calculated from filtered order data with Success-Green positive indicators"
-        }
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "summary": "Build Admin dashboard with secure login and overview showing platform-wide statistics",
-      "acceptanceCriteria": [
-        "Admin role has separate authenticated access via Internet Identity",
-        "Dashboard displays: total registered shops, pending shop approvals, total customers, total orders, total platform revenue (2% commissions)",
-        "Statistics are updated when admin views the dashboard"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/admin/AdminDashboardPage.tsx",
-          "operation": "create",
-          "description": "Create admin dashboard page protected by RoleGuard requiring admin role, fetching platform statistics from getPlatformStats backend method, displaying stat cards for total shops, pending approvals, total customers, total orders, and platform commission revenue with Trust-Blue styling"
-        },
-        {
-          "path": "frontend/src/components/admin/StatCard.tsx",
-          "operation": "create",
-          "description": "Create reusable stat card component displaying metric label, value, and optional trend indicator with Trust-Blue and Success-Green color scheme"
-        },
-        {
-          "path": "frontend/src/hooks/usePlatformStats.ts",
-          "operation": "create",
-          "description": "Create React Query hook for fetching platform statistics using getPlatformStats backend method with periodic refetch on dashboard view"
-        }
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "summary": "Implement shop management system for admin to approve/verify new shop registrations and view shop performance metrics",
-      "acceptanceCriteria": [
-        "New shop registrations require admin approval before becoming active",
-        "Admin sees pending shop applications with details: shop name, owner name, location, category",
-        "Admin can approve or reject shop applications with optional notes",
-        "Admin can view shop performance: total orders, total sales, average order value, customer ratings (if available)"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/admin/ShopManagementPage.tsx",
-          "operation": "create",
-          "description": "Create shop management page fetching all shops via getShops backend method with tabs for pending approvals and approved shops, showing shop details and admin action buttons with Trust-Blue primary actions"
-        },
-        {
-          "path": "frontend/src/components/admin/ShopApprovalCard.tsx",
-          "operation": "create",
-          "description": "Create shop approval card component displaying pending shop details with owner name lookup from getUserProfile, location, approve button calling approveShop backend method, with Success-Green approval confirmation"
-        },
-        {
-          "path": "frontend/src/components/admin/ShopPerformanceCard.tsx",
-          "operation": "create",
-          "description": "Create shop performance card component calculating and displaying shop metrics from orders data: total orders count, total sales sum, average order value, with expandable details view"
-        },
-        {
-          "path": "frontend/src/hooks/useShopManagement.ts",
-          "operation": "create",
-          "description": "Create React Query hook for shop management operations with mutations for approveShop backend method and queries for getShops with filtering by approval status"
-        }
-      ]
-    },
-    {
-      "id": "REQ-14",
-      "summary": "Create transaction analytics dashboard for admin showing total sales, pending 2% commissions, and subscription tracking",
-      "acceptanceCriteria": [
-        "Analytics page shows: total platform sales, total commission collected (2%), pending commission from recent orders",
-        "Track shopkeeper annual subscriptions (₹25/year) with renewal dates",
-        "Display list of shops with upcoming or overdue subscription renewals",
-        "Analytics filterable by date range and exportable summary"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/admin/AnalyticsPage.tsx",
-          "operation": "create",
-          "description": "Create analytics dashboard page displaying financial metrics from getPlatformStats and calculated commission data from orders, with date range filter and subscription tracking table showing ₹25 annual fee status with Trust-Blue data visualization"
-        },
-        {
-          "path": "frontend/src/components/admin/CommissionBreakdown.tsx",
-          "operation": "create",
-          "description": "Create commission breakdown component displaying total commission collected (2% of all sales), pending commission from recent orders not yet completed, with Success-Green positive indicators"
-        },
-        {
-          "path": "frontend/src/components/admin/SubscriptionTable.tsx",
-          "operation": "create",
-          "description": "Create subscription tracking table component displaying shops with subscription status, renewal dates, and overdue indicators for ₹25 annual fee, with sortable columns"
-        }
-      ]
-    },
-    {
-      "id": "REQ-15",
-      "summary": "Build user support ticket system for admin to manage disputes between customers and shopkeepers",
-      "acceptanceCriteria": [
-        "Customers and shopkeepers can create support tickets with: subject, description, related order ID (optional), and priority",
-        "Admin views all tickets with status: Open, In Progress, Resolved, Closed",
-        "Admin can add internal notes to tickets",
-        "Admin can update ticket status and mark resolution",
-        "Users can view their submitted tickets and admin responses"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/admin/TicketsPage.tsx",
-          "operation": "create",
-          "description": "Create admin tickets page fetching all tickets via getAllTickets backend method, displaying ticket list with status filter tabs (Open, In Progress, Resolved, Closed), with Trust-Blue active tab styling"
-        },
-        {
-          "path": "frontend/src/components/admin/TicketCard.tsx",
-          "operation": "create",
-          "description": "Create ticket card component showing ticket details, customer/shopkeeper info from getUserProfile lookup, issue description, status update controls calling updateTicketStatus backend method, with color-coded status badges"
-        },
-        {
-          "path": "frontend/src/pages/customer/MyTicketsPage.tsx",
-          "operation": "create",
-          "description": "Create customer tickets page displaying user's submitted tickets with status and issue details, with create new ticket button opening ticket creation modal"
-        },
-        {
-          "path": "frontend/src/components/shared/CreateTicketModal.tsx",
-          "operation": "create",
-          "description": "Create ticket creation modal component with form fields for issue description and optional related order ID, calling createSupportTicket backend method, accessible to both customers and shopkeepers with Success-Green submission confirmation"
-        },
-        {
-          "path": "frontend/src/hooks/useTickets.ts",
-          "operation": "create",
-          "description": "Create React Query hook for ticket operations with queries for getAllTickets (admin) and user-specific tickets, mutations for createSupportTicket and updateTicketStatus backend methods"
-        }
-      ]
-    },
-    {
-      "id": "REQ-16",
-      "summary": "Implement global settings panel for admin to adjust platform-wide delivery radius filter and manage platform configuration",
-      "acceptanceCriteria": [
-        "Admin can set a default delivery radius value (in kilometers) used for shop location filtering guidance",
-        "Admin can configure platform-wide settings: platform name, commission rate (default 2%), annual subscription fee (default ₹25)",
-        "Settings changes are applied immediately across the platform"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/admin/SettingsPage.tsx",
-          "operation": "create",
-          "description": "Create admin settings page with form inputs for delivery radius (km), commission rate (%), annual subscription fee (₹), and platform name, with save button and Trust-Blue primary action styling, Success-Green save confirmation"
-        },
-        {
-          "path": "frontend/src/components/admin/SettingsForm.tsx",
-          "operation": "create",
-          "description": "Create settings form component with validated number inputs for numeric settings, text input for platform name, with real-time validation and save/reset controls"
-        }
-      ]
-    },
-    {
-      "id": "REQ-17",
-      "summary": "Design mobile-first responsive UI with Trust-Blue and Success-Green color palette across all portals",
-      "acceptanceCriteria": [
-        "All portal interfaces are fully responsive and optimized for mobile devices (320px and up)",
-        "Primary color palette uses Trust-Blue (#1E3A8A or similar) for primary actions, headers, and trust elements",
-        "Success-Green (#10B981 or similar) used for confirmations, success states, and positive indicators",
-        "Typography, spacing, and touch targets follow mobile-first best practices",
-        "Navigation is intuitive with clear role-based menu structure"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Update global styles to define Trust-Blue (#1E3A8A) and Success-Green (#10B981) CSS custom properties, mobile-first responsive typography scale, touch-friendly spacing utilities, and baseline mobile layout styles"
-        },
+          "description": "Remove any permission gates that prevent approved shopkeepers from viewing their sales ledger. Ensure the page checks current approval status and grants immediate access when approved."
+        }
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "summary": "Add automatic query invalidation and refetch when shop approval status changes so shopkeepers see updated permissions without manual refresh",
+      "acceptanceCriteria": [
+        "When an admin approves a shop, all active shopkeeper sessions automatically refetch user profile and shop data",
+        "Shopkeeper UI transitions from 'pending approval' to 'active shop' state without requiring page reload",
+        "React Query cache invalidation triggers when shop status changes from pending to approved"
+      ],
+      "file_operations": [
         {
-          "path": "frontend/tailwind.config.js",
+          "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Extend Tailwind theme with custom Trust-Blue and Success-Green color definitions, mobile-first breakpoints, and responsive spacing scale optimized for 320px minimum width"
+          "description": "Add a polling mechanism or optimistic update logic to the useGetCallerUserProfile hook to automatically refetch user profile data at regular intervals (e.g., every 5-10 seconds) when a shopkeeper is in pending approval state. When the profile indicates shop approval, invalidate related queries (shops, products) to trigger UI updates. Ensure mutation hooks for shop approval (useApproveShop) invalidate the currentUserProfile query key to trigger immediate refetch for affected shopkeepers."
         },
         {
-          "path": "frontend/src/components/layout/AppLayout.tsx",
-          "operation": "create",
-          "description": "Create responsive app layout component with mobile-first navigation structure, role-based menu items (customer, shopkeeper, admin sections), collapsible mobile menu, using Trust-Blue header and navigation styling"
+          "path": "frontend/src/pages/shopkeeper/ShopDashboardPage.tsx",
+          "operation": "modify",
+          "description": "Implement UI state transitions that respond to user profile changes. When the useGetCallerUserProfile hook detects a shop has been approved (approved: true), automatically update the displayed UI from 'pending approval' state to 'active shop' controls without requiring page reload. Consider using React Query's onSuccess callback or useEffect to detect approval status changes."
         },
         {
-          "path": "frontend/src/components/layout/MobileNav.tsx",
+          "path": "frontend/src/hooks/useShopApprovalPolling.ts",
           "operation": "create",
-          "description": "Create mobile navigation component with hamburger menu, slide-out drawer, and role-based navigation links with Trust-Blue active states and touch-friendly tap targets (minimum 44x44px)"
+          "description": "Create a custom hook that implements polling logic for shopkeepers with pending shop approval. The hook should use useGetCallerUserProfile with refetchInterval when the shop exists but is not yet approved. Once approval is detected, stop polling and invalidate related query keys (currentUserProfile, shops) to trigger UI updates across all shopkeeper pages."
+        }
+      ]
+    },
+    {
+      "id": "REQ-20",
+      "summary": "Remove unnecessary authentication barriers or complex permission checks that prevent shopkeepers from accessing their dashboard after initial Internet Identity login and admin approval",
+      "acceptanceCriteria": [
+        "Shopkeeper role users only need to authenticate once with Internet Identity",
+        "After shop approval, no additional login prompts or permission gates block access to inventory, orders, or ledger pages",
+        "The RoleGuard component correctly identifies approved shopkeepers and grants immediate access to shopkeeper routes"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/auth/RoleGuard.tsx",
+          "operation": "modify",
+          "description": "Simplify the RoleGuard logic to ensure shopkeepers with approved shops are granted immediate access to shopkeeper routes without additional permission checks. Verify the component uses the current user profile from useGetCallerUserProfile and checks both appRole and shop approval status. Remove any redundant authentication prompts or loading states that block access after the initial Internet Identity login."
         },
         {
-          "path": "frontend/src/components/layout/RoleBasedNav.tsx",
-          "operation": "create",
-          "description": "Create role-based navigation component that renders appropriate menu items based on user's appRole (customer, shopkeeper, admin) from UserProfile, with conditional route visibility"
+          "path": "frontend/src/pages/shopkeeper/InventoryPage.tsx",
+          "operation": "modify",
+          "description": "Remove complex permission checks or conditional logic that creates additional barriers to accessing inventory management. Ensure the page relies solely on RoleGuard and shop approval status from the user profile, without implementing duplicate authentication checks that might require re-login."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wire AppLayout into App component, wrap routes with authentication check and RoleGuard components, add route definitions for all customer, shopkeeper, and admin pages created in this plan, integrate ProfileSetupModal for first-time users. Reference generated hero banner image at frontend/public/assets/generated/hero-banner.dim_1200x400.png and portal icons (customer-icon.dim_64x64.png, shopkeeper-icon.dim_64x64.png, admin-icon.dim_64x64.png) in the navigation or dashboard sections."
+          "description": "Review route definitions for shopkeeper pages (/shopkeeper/dashboard, /shopkeeper/inventory, /shopkeeper/orders, /shopkeeper/ledger) and ensure they use RoleGuard correctly with allowedRoles=['shopkeeper']. Verify that no additional authentication middleware or guards are applied that would create unnecessary login barriers for approved shopkeepers."
+        },
+        {
+          "path": "frontend/src/hooks/useAuth.ts",
+          "operation": "modify",
+          "description": "Ensure the useAuth hook provides a stable and consistent authentication state that prevents unnecessary re-authentication prompts. Verify that the hook correctly combines Internet Identity state and user profile data without introducing race conditions or loading states that could block shopkeeper access after approval."
         }
       ]
     }
