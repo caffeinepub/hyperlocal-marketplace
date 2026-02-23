@@ -1,0 +1,246 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Hyperlocal marketplace with Customer, Shopkeeper, and Admin portals. Customers browse shops by location filter, view products by category (Grocery, Electronics, Fashion), add to cart, and checkout. Shopkeepers manage inventory with online/offline toggle, upload product photos, and view orders. Admin dashboard for shop approval, transaction monitoring (2% commission tracking), and user management. Mobile-first responsive design with Internet Identity authentication. Uses Motoko backend (not Firebase). No real-time geolocation, push notifications, AI image analysis, or live tracking.",
+  "architectural_notes": [
+    "Three-tier role system: Customer, Shopkeeper, Admin with Internet Identity authentication",
+    "Motoko backend for data persistence (not Firebase)",
+    "Mobile-first responsive PWA design",
+    "Trust-Blue and Success-Green color palette",
+    "Location filtering by city/area instead of GPS-based geolocation",
+    "Manual order status checks instead of real-time push notifications",
+    "Shopkeeper subscription model: ₹25/year tracked in admin analytics",
+    "2% platform commission on sales tracked in digital ledger"
+  ],
+  "known_issues": [
+    "No real-time geolocation - shops filtered by manually set city/area",
+    "No push notifications - users check order status manually",
+    "No AI image analysis for product suggestions from photos",
+    "No real-time inventory sync - updates occur on user actions",
+    "No live delivery tracking on map"
+  ],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Hero banner image showing local marketplace scene with shops and customers (hero-banner.dim_1200x400.png)\n- Placeholder product image for inventory items without photos (product-placeholder.dim_300x300.png)\n- Customer portal icon representing shopping (customer-icon.dim_64x64.png)\n- Shopkeeper portal icon representing store management (shopkeeper-icon.dim_64x64.png)\n- Admin portal icon representing dashboard control (admin-icon.dim_64x64.png)",
+  "existing_features": [
+    {
+      "id": "feature-implement-user-authentication-with-three-role-types-customer-shopkeeper-and-admin-using-internet-identity",
+      "title": "Implement user authentication with three role types: Customer, Shopkeeper, and Admin using Internet Identity",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-customer-portal-with-shop-browsing-filtered-by-manually-set-city-area-location",
+      "title": "Create Customer portal with shop browsing filtered by manually set city/area location",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-category-based-product-search-with-predefined-categories-grocery-electronics-fashion-home-garden-health-beauty-sports-outdoors",
+      "title": "Implement category-based product search with predefined categories: Grocery, Electronics, Fashion, Home & Garden, Health & Beauty, Sports & Outdoors",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-shopping-cart-with-quick-add-functionality-and-quantity-adjustment",
+      "title": "Build shopping cart with Quick-Add functionality and quantity adjustment",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-secure-checkout-process-that-calculates-order-total-applies-2-platform-commission-and-records-transaction",
+      "title": "Create secure checkout process that calculates order total, applies 2% platform commission, and records transaction",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-my-orders-section-for-customers-showing-order-history-with-status-tracking",
+      "title": "Implement My Orders section for customers showing order history with status tracking",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-return-exchange-request-functionality-allowing-customers-to-submit-requests-for-completed-orders",
+      "title": "Add Return/Exchange request functionality allowing customers to submit requests for completed orders",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-shopkeeper-portal-with-online-offline-status-toggle-visible-to-customers",
+      "title": "Create Shopkeeper portal with online/offline status toggle visible to customers",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-inventory-management-system-for-shopkeepers-to-add-edit-and-delete-products-with-photo-upload",
+      "title": "Build inventory management system for shopkeepers to add, edit, and delete products with photo upload",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-order-management-dashboard-for-shopkeepers-to-view-incoming-orders-and-update-order-status",
+      "title": "Implement order management dashboard for shopkeepers to view incoming orders and update order status",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-digital-ledger-for-shopkeepers-showing-sales-history-with-2-platform-commission-breakdown-per-transaction",
+      "title": "Create digital ledger for shopkeepers showing sales history with 2% platform commission breakdown per transaction",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-admin-dashboard-with-secure-login-and-overview-showing-platform-wide-statistics",
+      "title": "Build Admin dashboard with secure login and overview showing platform-wide statistics",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-shop-management-system-for-admin-to-approve-verify-new-shop-registrations-and-view-shop-performance-metrics",
+      "title": "Implement shop management system for admin to approve/verify new shop registrations and view shop performance metrics",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-transaction-analytics-dashboard-for-admin-showing-total-sales-pending-2-commissions-and-subscription-tracking",
+      "title": "Create transaction analytics dashboard for admin showing total sales, pending 2% commissions, and subscription tracking",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-user-support-ticket-system-for-admin-to-manage-disputes-between-customers-and-shopkeepers",
+      "title": "Build user support ticket system for admin to manage disputes between customers and shopkeepers",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-global-settings-panel-for-admin-to-adjust-platform-wide-delivery-radius-filter-and-manage-platform-configuration",
+      "title": "Implement global settings panel for admin to adjust platform-wide delivery radius filter and manage platform configuration",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-mobile-first-responsive-ui-with-trust-blue-and-success-green-color-palette-across-all-portals",
+      "title": "Design mobile-first responsive UI with Trust-Blue and Success-Green color palette across all portals",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Customer portal with location-filtered shop browsing and category search",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Shopping cart and checkout process",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "My Orders section for order tracking",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Return/Exchange request functionality",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Shopkeeper portal with inventory management and online/offline toggle",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Product photo upload for shopkeepers",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Order management dashboard for shopkeepers",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Digital ledger tracking 2% platform commission per sale",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Admin dashboard with secure login",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Shop management: approve/verify new shop registrations and view performance",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Transaction analytics: monitor sales, 2% commissions, and subscription renewals",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "User support ticket system for dispute resolution",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Global settings: adjust delivery radius and manage platform settings",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Local Market Hub",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

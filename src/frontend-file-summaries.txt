@@ -1,0 +1,14 @@
+{
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining all routes for customer, shopkeeper, and admin portals with authentication and profile setup integration.",
+  "frontend/src/components/customer/OrderCard.tsx": "Customer order card component displaying order details, status badges, and return request functionality with proper OrderStatus enum import.",
+  "frontend/src/components/customer/ProductCard.tsx": "Product card component for customer browsing with category badges, pricing, stock status, and quick-add to cart functionality using proper Category enum import.",
+  "frontend/src/components/shopkeeper/InventoryProductCard.tsx": "Shopkeeper inventory product card with edit/delete actions, stock status display, and category badges using proper Category enum import.",
+  "frontend/src/components/shopkeeper/ShopOrderCard.tsx": "Shopkeeper order management card with status workflow buttons and order status updates using proper OrderStatus enum import.",
+  "frontend/src/pages/admin/AdminDashboardPage.tsx": "Admin dashboard page displaying platform-wide statistics including total shops, orders, revenue, and pending tickets.",
+  "frontend/src/pages/admin/ShopManagementPage.tsx": "Admin shop management page with tabs for pending and approved shops, featuring shop approval functionality.",
+  "frontend/src/pages/admin/AnalyticsPage.tsx": "Admin analytics page showing transaction data, platform sales, commission tracking, and subscription management placeholder.",
+  "frontend/src/pages/admin/TicketsPage.tsx": "Admin support ticket management page with tabs for open, in-progress, and resolved tickets with status update controls.",
+  "frontend/src/pages/admin/SettingsPage.tsx": "Admin settings page placeholder for future platform-wide configuration options.",
+  "frontend/src/index.css": "Global styles with OKLCH color system including custom Trust-Blue and Success-Green color tokens for light and dark modes.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with custom Trust-Blue and Success-Green color utilities matching the marketplace theme."
+}

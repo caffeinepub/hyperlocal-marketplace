@@ -1,0 +1,358 @@
+{
+  "kind": "build_request",
+  "title": "Build hyperlocal marketplace with Customer, Shopkeeper, and Admin portals",
+  "projectName": "Local Market Hub",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Implement user authentication with three role types: Customer, Shopkeeper, and Admin using Internet Identity",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "three distinct user portals: Customer, Shopkeeper, and Admin"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can register and login using Internet Identity",
+        "System assigns one of three roles: Customer, Shopkeeper, or Admin",
+        "Role is persisted and enforced across all portal access"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Create Customer portal with shop browsing filtered by manually set city/area location",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "geolocation-based home screen showing nearby shops within 5km"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Customers can filter shops by city or area designation",
+        "Shop listings display name, category, and online/offline status",
+        "Only shops marked as 'Online' appear in active listings"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement category-based product search with predefined categories: Grocery, Electronics, Fashion, Home & Garden, Health & Beauty, Sports & Outdoors",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "category-based search (Grocery, Electronics, Fashion, etc.)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Products are tagged with one primary category",
+        "Customers can filter products by category across all shops or within a single shop",
+        "Category filter updates product listings dynamically"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Build shopping cart with Quick-Add functionality and quantity adjustment",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "'Quick-Add' cart"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Customers can add products to cart with a single click",
+        "Cart displays all items with product name, price, quantity, and subtotal",
+        "Customers can adjust quantities or remove items before checkout"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Create secure checkout process that calculates order total, applies 2% platform commission, and records transaction",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "secure checkout process",
+          "2% platform margin per sale"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Checkout displays itemized order summary with total amount",
+        "System calculates and records 2% commission on each sale",
+        "Order is created with status 'Pending' after checkout completion",
+        "Cart is cleared after successful order placement"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Implement My Orders section for customers showing order history with status tracking",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "'My Orders' section for real-time tracking"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Customers can view all their past and current orders",
+        "Each order displays: order ID, date, shop name, items, total amount, and current status",
+        "Order statuses include: Pending, Confirmed, Preparing, Ready for Pickup, Completed, Cancelled",
+        "Customers can manually refresh to see updated order status"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Add Return/Exchange request functionality allowing customers to submit requests for completed orders",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "simple 'Return/Exchange' button for local trust"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Customers can initiate return or exchange request on completed orders",
+        "Request form captures: order ID, reason (dropdown: Damaged, Wrong Item, Quality Issue, Changed Mind), and optional description",
+        "Request is submitted to admin for review",
+        "Customer can view status of their return/exchange requests"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Create Shopkeeper portal with online/offline status toggle visible to customers",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "toggle 'Online/Offline' status"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Shopkeepers can toggle their shop status between Online and Offline",
+        "Status change is reflected immediately in customer-facing shop listings",
+        "Offline shops do not appear in active customer browsing"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Build inventory management system for shopkeepers to add, edit, and delete products with photo upload",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "simplified inventory manager",
+          "upload a photo"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Shopkeepers can add new products with: name, description, price, category, stock quantity, and product image",
+        "Image upload stores photo as static asset accessible via frontend",
+        "Shopkeepers can edit existing product details including replacing product image",
+        "Shopkeepers can delete products from their inventory",
+        "Products marked as out-of-stock are visually indicated but remain visible"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Implement order management dashboard for shopkeepers to view incoming orders and update order status",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "order management dashboard"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Shopkeepers see all orders placed at their shop sorted by date (newest first)",
+        "Each order displays: order ID, customer name, items ordered, total amount, and current status",
+        "Shopkeepers can update order status through workflow: Pending → Confirmed → Preparing → Ready for Pickup → Completed",
+        "Shopkeepers can cancel orders with reason"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Create digital ledger for shopkeepers showing sales history with 2% platform commission breakdown per transaction",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "digital ledger to track the 2% platform margin per sale"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Ledger displays all completed orders with: date, order ID, gross sale amount, 2% commission deducted, and net earning",
+        "Running totals show: total sales, total commission paid, and net earnings for current month and all-time",
+        "Ledger is filterable by date range"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Build Admin dashboard with secure login and overview showing platform-wide statistics",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Admin Dashboard (Master Control)",
+          "secure login for the platform owner"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin role has separate authenticated access via Internet Identity",
+        "Dashboard displays: total registered shops, pending shop approvals, total customers, total orders, total platform revenue (2% commissions)",
+        "Statistics are updated when admin views the dashboard"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Implement shop management system for admin to approve/verify new shop registrations and view shop performance metrics",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Approve/verify new shop registrations and view their performance"
+        ]
+      },
+      "acceptanceCriteria": [
+        "New shop registrations require admin approval before becoming active",
+        "Admin sees pending shop applications with details: shop name, owner name, location, category",
+        "Admin can approve or reject shop applications with optional notes",
+        "Admin can view shop performance: total orders, total sales, average order value, customer ratings (if available)"
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "text": "Create transaction analytics dashboard for admin showing total sales, pending 2% commissions, and subscription tracking",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Monitor total sales, pending 2% commissions, and subscription renewals (₹25/year)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Analytics page shows: total platform sales, total commission collected (2%), pending commission from recent orders",
+        "Track shopkeeper annual subscriptions (₹25/year) with renewal dates",
+        "Display list of shops with upcoming or overdue subscription renewals",
+        "Analytics filterable by date range and exportable summary"
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "text": "Build user support ticket system for admin to manage disputes between customers and shopkeepers",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "ticket system to resolve disputes between customers and shopkeepers"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Customers and shopkeepers can create support tickets with: subject, description, related order ID (optional), and priority",
+        "Admin views all tickets with status: Open, In Progress, Resolved, Closed",
+        "Admin can add internal notes to tickets",
+        "Admin can update ticket status and mark resolution",
+        "Users can view their submitted tickets and admin responses"
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "text": "Implement global settings panel for admin to adjust platform-wide delivery radius filter and manage platform configuration",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "adjust delivery radius"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin can set a default delivery radius value (in kilometers) used for shop location filtering guidance",
+        "Admin can configure platform-wide settings: platform name, commission rate (default 2%), annual subscription fee (default ₹25)",
+        "Settings changes are applied immediately across the platform"
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "text": "Design mobile-first responsive UI with Trust-Blue and Success-Green color palette across all portals",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "mobile-first responsive design",
+          "clean, 'Trust-Blue' and 'Success-Green' color palette"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All portal interfaces are fully responsive and optimized for mobile devices (320px and up)",
+        "Primary color palette uses Trust-Blue (#1E3A8A or similar) for primary actions, headers, and trust elements",
+        "Success-Green (#10B981 or similar) used for confirmations, success states, and positive indicators",
+        "Typography, spacing, and touch targets follow mobile-first best practices",
+        "Navigation is intuitive with clear role-based menu structure"
+      ]
+    }
+  ],
+  "constraints": [
+    "Use Motoko for backend (not Firebase or other external databases)",
+    "Use Internet Identity for authentication (no Firebase Auth, OAuth, or third-party auth)",
+    "Do not implement real-time geolocation or GPS-based location tracking",
+    "Do not implement push notifications or instant alerts",
+    "Do not implement AI image analysis or automated product detail suggestion from photos",
+    "Do not implement real-time WebSocket-style inventory synchronization",
+    "Do not implement live delivery tracking on maps"
+  ],
+  "nonGoals": [
+    "Integration with external payment gateways (Stripe, PayPal, etc.)",
+    "Real-time chat between customers and shopkeepers",
+    "Mobile app deployment (iOS/Android native apps)",
+    "Email or SMS notifications",
+    "Integration with third-party delivery services",
+    "Multi-language support",
+    "Advanced analytics dashboards with charts and graphs"
+  ],
+  "imageRequirements": {
+    "required": [
+      "Hero banner image showing local marketplace scene with shops and customers (hero-banner.dim_1200x400.png)",
+      "Placeholder product image for inventory items without photos (product-placeholder.dim_300x300.png)",
+      "Customer portal icon representing shopping (customer-icon.dim_64x64.png)",
+      "Shopkeeper portal icon representing store management (shopkeeper-icon.dim_64x64.png)",
+      "Admin portal icon representing dashboard control (admin-icon.dim_64x64.png)"
+    ],
+    "edits": []
+  }
+}

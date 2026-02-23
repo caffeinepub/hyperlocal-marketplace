@@ -1,0 +1,215 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-23T16:23:19.074Z",
+  "summary": "The implementation covers most core requirements including Internet Identity authentication with three roles (Customer, Shopkeeper, Admin), role-based portals with shop browsing, product management, shopping cart, checkout with 2% commission, order management, return/exchange requests, support tickets, and admin dashboards. However, several specific acceptance criteria are partially implemented or missing, particularly around shop approval workflows, subscription tracking, analytics features, settings management, and some UI/UX details.",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "Only shops marked as 'Online' appear in active listings",
+      "reason": "The ShopCard component displays online status but does not filter out offline shops in shop browsing. The getShops() backend method returns all shops without filtering by isOpen status.",
+      "evidence": [
+        "frontend/src/components/customer/ShopCard.tsx",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Order statuses include: Pending, Confirmed, Preparing, Ready for Pickup, Completed, Cancelled",
+      "reason": "Backend OrderStatus enum uses pending, confirmed, shipped, delivered, cancelled instead of the specified statuses. Preparing and Ready for Pickup are missing, with shipped used instead.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Request form captures: order ID, reason (dropdown: Damaged, Wrong Item, Quality Issue, Changed Mind), and optional description",
+      "reason": "ReturnRequestModal implements dropdown reasons correctly but concatenates them into a single text field instead of storing structured data with separate reason and description fields as implied by the requirement.",
+      "evidence": [
+        "frontend/src/components/customer/ReturnRequestModal.tsx"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Products marked as out-of-stock are visually indicated but remain visible",
+      "reason": "While InventoryProductCard shows Out of Stock badge, there is no evidence that out-of-stock products remain visible in customer-facing ProductCard or are properly handled in product browsing filters.",
+      "evidence": [
+        "frontend/src/components/shopkeeper/InventoryProductCard.tsx"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "Shopkeepers can update order status through workflow: Pending to Confirmed to Preparing to Ready for Pickup to Completed",
+      "reason": "ShopOrderCard implements status transitions but uses shipped instead of Preparing and delivered instead of Ready for Pickup or Completed, not matching the specified workflow.",
+      "evidence": [
+        "frontend/src/components/shopkeeper/ShopOrderCard.tsx"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "requirement": "Ledger is filterable by date range",
+      "reason": "LedgerPage is referenced in routing but the actual page implementation is missing from the diff, so date range filtering cannot be verified.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "requirement": "Dashboard displays: total registered shops, pending shop approvals, total customers, total orders, total platform revenue (2% commissions)",
+      "reason": "AdminDashboardPage is referenced but not included in diff. PlatformStats type in backend includes these fields, but without the page implementation, display cannot be verified.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "requirement": "New shop registrations require admin approval before becoming active",
+      "reason": "Shop type has approved field, but no shop registration flow or approval workflow is visible in the diff. ShopManagementPage is referenced but not implemented.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "requirement": "Admin can view shop performance: total orders, total sales, average order value, customer ratings",
+      "reason": "ShopManagementPage referenced but not included in diff. No backend methods visible for retrieving shop performance metrics.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "requirement": "Track shopkeeper annual subscriptions with renewal dates",
+      "reason": "No Shop subscription fields, subscription tracking logic, or renewal date management visible in backend Shop type or analytics methods.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "requirement": "Display list of shops with upcoming or overdue subscription renewals",
+      "reason": "AnalyticsPage is referenced but not included in diff. No subscription renewal tracking logic found in backend.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "requirement": "Analytics filterable by date range and exportable summary",
+      "reason": "AnalyticsPage is referenced in routing but the actual implementation is missing from the diff, so date filtering and export functionality cannot be verified.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "requirement": "Customers and shopkeepers can create support tickets with: subject, description, related order ID (optional), and priority",
+      "reason": "CreateTicketModal only captures issue text, missing separate subject field, related order ID field, and priority selection.",
+      "evidence": [
+        "frontend/src/components/shared/CreateTicketModal.tsx"
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "requirement": "Admin can add internal notes to tickets",
+      "reason": "TicketsPage is referenced but not included in diff. SupportTicket backend type has no notes field, and no methods for adding internal notes are visible.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "requirement": "Users can view their submitted tickets and admin responses",
+      "reason": "MyTicketsPage is referenced but not included in diff. No mechanism visible for admin to add responses or for users to view them.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "requirement": "Admin can set a default delivery radius value used for shop location filtering guidance",
+      "reason": "SettingsPage is referenced but not included in diff. No delivery radius configuration visible in backend or admin settings.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "requirement": "Admin can configure platform-wide settings: platform name, commission rate, annual subscription fee",
+      "reason": "SettingsPage is referenced but not included in diff. No global settings configuration structure visible in backend.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "requirement": "Settings changes are applied immediately across the platform",
+      "reason": "Without SettingsPage implementation or backend settings storage, immediate application of changes cannot be verified.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Backend uses OrderStatus enum with values pending, confirmed, shipped, delivered, cancelled",
+      "reason": "Requirements specify order statuses should include Preparing and Ready for Pickup, but implementation uses shipped and delivered instead, which are different status labels than requested.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "confidence": 0.85,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/auth/ProfileSetupModal.tsx",
+    "frontend/src/components/auth/RoleGuard.tsx",
+    "frontend/src/components/customer/CartItem.tsx",
+    "frontend/src/components/customer/CartSidebar.tsx",
+    "frontend/src/components/customer/OrderCard.tsx",
+    "frontend/src/components/customer/ProductCard.tsx",
+    "frontend/src/components/customer/ReturnRequestModal.tsx",
+    "frontend/src/components/customer/ShopCard.tsx",
+    "frontend/src/components/layout/AppLayout.tsx",
+    "frontend/src/components/shared/CreateTicketModal.tsx",
+    "frontend/src/components/shopkeeper/InventoryProductCard.tsx",
+    "frontend/src/components/shopkeeper/ProductFormModal.tsx",
+    "frontend/src/components/shopkeeper/ShopOrderCard.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useAuth.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/admin/AdminDashboardPage.tsx",
+    "frontend/src/pages/admin/AnalyticsPage.tsx",
+    "frontend/src/pages/admin/SettingsPage.tsx",
+    "frontend/src/pages/admin/ShopManagementPage.tsx",
+    "frontend/src/pages/admin/TicketsPage.tsx",
+    "frontend/src/pages/customer/CheckoutPage.tsx",
+    "frontend/src/pages/customer/MyOrdersPage.tsx",
+    "frontend/src/pages/customer/MyTicketsPage.tsx",
+    "frontend/src/pages/customer/ProductBrowsePage.tsx",
+    "frontend/src/pages/customer/ReturnRequestsPage.tsx",
+    "frontend/src/pages/customer/ShopBrowsePage.tsx",
+    "frontend/src/pages/shopkeeper/InventoryPage.tsx",
+    "frontend/src/pages/shopkeeper/LedgerPage.tsx",
+    "frontend/src/pages/shopkeeper/OrdersPage.tsx",
+    "frontend/src/pages/shopkeeper/ShopDashboardPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}
